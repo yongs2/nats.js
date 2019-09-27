@@ -23,6 +23,7 @@ const argv = require('minimist')(process.argv.slice(2));
 
 const url = argv.s || nats.DEFAULT_URI;
 const creds = argv.creds;
+const queue1 = argv.queue;
 const subject = argv._[0];
 
 if (!subject) {
@@ -31,7 +32,7 @@ if (!subject) {
 }
 
 // Connect to NATS server.
-const nc = nats.connect(url, nats.creds(creds));
+const nc = nats.connect(url, {"queue":queue1}, nats.creds(creds));
 
 nc.on('connect', function() {
     nc.subscribe(subject, function(msg) {
