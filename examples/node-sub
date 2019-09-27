@@ -32,10 +32,10 @@ if (!subject) {
 }
 
 // Connect to NATS server.
-const nc = nats.connect(url, {"queue":queue1}, nats.creds(creds));
+const nc = nats.connect(url, nats.creds(creds));
 
 nc.on('connect', function() {
-    nc.subscribe(subject, function(msg) {
+    nc.subscribe(subject, {queue:queue1}, function(msg) {
         console.log('Received "' + msg + '"');
     });
     console.log('Listening on [' + subject + ']');
